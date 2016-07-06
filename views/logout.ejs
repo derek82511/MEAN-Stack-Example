@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Logout</title>
+	
+	<link href="/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="/lib/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet" />
+
+	<link href="/stylesheets/style.css" rel="stylesheet" />
+</head>
+<body>
+	<div id="container" class="container">
+		<legend>Logout</legend>
+
+		<br />
+		<p>Signed out, Go to Home Page after 5 seconds...</p>
+	</div>
+	
+	<script src="/lib/jquery/dist/jquery.min.js"></script>
+	<script src="/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+
+	<script type="text/javascript">
+		setTimeout(function(){
+			window.location.href = '/';
+		}, 5000);
+	</script>
+</body>
+</html>
