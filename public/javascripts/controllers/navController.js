@@ -1,20 +1,20 @@
-angular.module('app').controller('NavController', ['UserManager', function(UserManager){
+angular.module('app').controller('NavController', ['UserManager', function(UserManager) {
 
-	var self = this;
+    var self = this;
 
-	init();
+    init();
 
-	function init(){
-		var navContainer = document.getElementById('navContainer');
-		navContainer.className = 'container-fluid';
-	}
+    function init() {
+        var navContainer = document.getElementById('navContainer');
+        navContainer.className = 'container-fluid';
+    }
 
-	this.isPermit = function(permitRole){
-		if(UserManager.user){
-			return UserManager.user.roles.indexOf(permitRole) > -1;
-		}
-		return false;
-	};
-		
+    this.isPermit = function(permitRole) {
+        if (UserManager.user) {
+            return UserManager.user.roles.indexOf(permitRole) > -1;
+        }
+        return false;
+    };
+
 
 }]);

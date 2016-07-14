@@ -1,7 +1,7 @@
-angular.module('app').run(['$state', 'UserManager', function ($state, UserManager){
-	
-	UserManager.loadUserData();
+angular.module('app').run(['$state', 'UserManager', function($state, UserManager) {
 
-	$state.go("home");
-	
+    UserManager.loadUserData();
+
+    $state.go("home");
+
 }]);

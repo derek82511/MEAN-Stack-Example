@@ -1,30 +1,31 @@
 require('./db');
 
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var session = require('express-session');
+let express = require('express');
+let path = require('path');
+let favicon = require('serve-favicon');
+let logger = require('morgan');
+let cookieParser = require('cookie-parser');
+let bodyParser = require('body-parser');
 
-var passport = require('passport');
+let session = require('express-session');
 
-var ConnectRoles = require('connect-roles');
+let passport = require('passport');
 
-var indexRoutes = require('./routes/index');
-var userRoutes = require('./routes/user');
-var messageRoutes = require('./routes/message');
+let ConnectRoles = require('connect-roles');
 
-var User = require('./models/user');
+let indexRoutes = require('./routes/index');
+let userRoutes = require('./routes/user');
+let messageRoutes = require('./routes/message');
 
-var roles = new ConnectRoles({
-  failureHandler: function (req, res, action) {
-    res.status(403).send('Access Denied - You don\'t have permission');
-  }
+let User = require('./models/user');
+
+let roles = new ConnectRoles({
+    failureHandler: (req, res, action) => {
+        res.status(403).send('Access Denied - You don\'t have permission');
+    }
 });
 
-var app = express();
+let app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -48,10 +49,10 @@ passport.deserializeUser(User.deserializeUser());
 
 app.use(roles.middleware());
 
-roles.use('user', function (req) {
-  if (req.user && req.user.roles.indexOf('user') > -1) {
-    return true;
-  }
+roles.use('user', (req) => {
+    if (req.user && req.user.roles.indexOf('user') > -1) {
+        return true;
+    }
 })
 
 app.use('/user', userRoutes);
@@ -60,10 +61,10 @@ app.use('/message', roles.is('user'), messageRoutes);
 app.use('/', indexRoutes);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+app.use((req, res, next) => {
+    let err = new Error('Not Found');
+    err.status = 404;
+    next(err);
 });
 
 // error handlers
@@ -71,23 +72,23 @@ app.use(function(req, res, next) {
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
-  app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
-      message: err.message,
-      error: err
+    app.use((err, req, res, next) => {
+        res.status(err.status || 500);
+        res.render('error', {
+            message: err.message,
+            error: err
+        });
     });
-  });
 }
 
 // production error handler
 // no stacktraces leaked to user
-app.use(function(err, req, res, next) {
-  res.status(err.status || 500);
-  res.render('error', {
-    message: err.message,
-    error: {}
-  });
+app.use((err, req, res, next) => {
+    res.status(err.status || 500);
+    res.render('error', {
+        message: err.message,
+        error: {}
+    });
 });
 
 

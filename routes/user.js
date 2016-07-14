@@ -1,69 +1,69 @@
-var express = require('express');
-var router = express.Router();
+let express = require('express');
+let router = express.Router();
 
-var passport = require('passport');
+let passport = require('passport');
 
-var User = require('../models/user');
+let User = require('../models/user');
 
-router.get('/', function(req, res, next) {
-	let user = req.user;
+router.get('/', (req, res, next) => {
+    let user = req.user;
 
-	res.json(user);
+    res.json(user);
 });
 
-router.post('/register', function(req, res, next) {
-	if(req.body['password_repeat'] !== req.body['password']){
-		return res.json({
-			error: '密碼輸入不一致。'
-		});
-	}
+router.post('/register', (req, res, next) => {
+    if (req.body['password_repeat'] !== req.body['password']) {
+        return res.json({
+            error: '密碼輸入不一致。'
+        });
+    }
 
-	let user = new User({
-		username: req.body.username,
-		firstName: req.body.firstName,
-		lastName: req.body.lastName,
-		email: req.body.email,
-		messages: [],
-		roles: ['user']
-	});
+    let user = new User({
+        username: req.body.username,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        email: req.body.email,
+        messages: [],
+        roles: ['user']
+    });
 
-	User.register(user, req.body.password, function(err, doc) {
+    User.register(user, req.body.password, (err, doc) => {
         if (err) {
             return res.json({
-				error: err.message
-			});
+                error: err.message
+            });
         }
 
-        passport.authenticate('local')(req, res, function () {
+        passport.authenticate('local')(req, res, () => {
             res.json({});
         });
     });
 });
 
-router.post('/login', function(req, res, next) {
-	passport.authenticate('local', function(err, user, info) {
-	    if (err) { 
-	    	return res.json({
-				error: err.message
-			});
-	    }
+router.post('/login', (req, res, next) => {
+    passport.authenticate('local', (err, user, info) => {
+        if (err) {
+            return res.json({
+                error: err.message
+            });
+        }
 
-	    if (!user) { 
-	    	return res.json({
-				error: info.message
-			});
-	    }
-	    
-	    req.logIn(user, function(err) {
-		    if (err) { 
-		    	return res.json({
-					error: err.message
-				});
-		    }
+        if (!user) {
+            return res.json({
+                error: info.message
+            });
+        }
 
-		    res.json({});
-	    });
-	})(req, res, next);
+        req.logIn(user, (err) => {
+            if (err) {
+                return res.json({
+                    error: err.message
+                });
+            }
+
+            res.json({});
+        });
+    })(req, res, next);
 });
 
 module.exports = router;

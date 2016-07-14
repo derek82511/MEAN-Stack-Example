@@ -1,62 +1,68 @@
-var express = require('express');
-var router = express.Router();
+let express = require('express');
+let router = express.Router();
 
-var Message = require('../models/message');
-var User = require('../models/user');
+let co = require('co');
 
-router.post('/', function(req, res, next) {
-	let message = { 
-		content: req.body['content'],
-		user: req.body['userId']
-	};
+let MessageService = require('../services/message');
 
-	Message.create(message, function (err, doc) {
-	    if (err) return console.error(err);
+router.post('/', (req, res, next) => {
+    co(function*() {
+        let message = {
+            content: req.body['content'],
+            user: req.body['userId']
+        };
 
-	    User.update({ _id: doc.user }, { $addToSet: { messages: doc._id } }, function(err, obj){
-	    	if (err) return console.error(err);
+        try {
+            let messageDoc = yield MessageService.create(message);
 
-	    	res.json(doc);
-	    });
-	});
+            res.status(201).json(messageDoc);
+        } catch (err) {
+            res.json({
+                error: err.message
+            });
+        }
+    });
 });
 
-router.put('/:id', function(req, res, next) {
-	Message.findOneAndUpdate({ _id: req.params['id'] }, req.body, { new: true }, function(err, doc){
-	    if (err) return console.error(err);
+router.put('/:id', (req, res, next) => {
+    co(function*() {
+        try {
+            let messageDoc = yield MessageService.update(req.params['id'], req.body);
 
-	    res.json(doc);
-	});
+            res.json(messageDoc);
+        } catch (err) {
+            res.json({
+                error: err.message
+            });
+        }
+    });
 });
 
-router.delete('/:id', function(req, res, next) {
-	Message.findOneAndRemove({ _id: req.params['id'] }, function (err, doc) {
-	  	if (err) return console.error(err);
+router.delete('/:id', (req, res, next) => {
+    co(function*() {
+        try {
+            yield MessageService.remove(req.params['id']);
 
-	  	User.update({ _id: doc.user}, { $pull: { messages: doc._id } }, function(err, obj){
-	  		if (err) return console.error(err);
-
-	  		res.send();
-	  	});
-	});
+            res.status(204).send();
+        } catch (err) {
+            res.json({
+                error: err.message
+            });
+        }
+    });
 });
 
-router.get('/user/:id', function(req, res, next) {
-	User.findOne({ _id: req.params['id'] }).populate('messages').exec()
-	.then(function(userDoc){
-		if(!userDoc){
-			throw new Error("User not exist");
-		}
+router.get('/user/:id', (req, res, next) => {
+    co(function*() {
+        try {
+            let messages = yield MessageService.findByUserId(req.params['id']);
 
-		return userDoc.messages;
-	})
-	.then(function(result){
-		res.json(result);
-	})
-	.then(undefined, function(err){
-    	res.json({
-    		error: err.message
-    	});
+            res.json(messages);
+        } catch (err) {
+            res.json({
+                error: err.message
+            });
+        }
     });
 });
 
