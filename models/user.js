@@ -1,9 +1,9 @@
-let mongoose = require('mongoose');
-let Schema = mongoose.Schema;
-let mongooseUniqueValidator = require('mongoose-unique-validator');
-let passportLocalMongoose = require('passport-local-mongoose');
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+const mongooseUniqueValidator = require('mongoose-unique-validator');
+const passportLocalMongoose = require('passport-local-mongoose');
 
-let schema = new Schema({
+const schema = new Schema({
     username: { type: String, required: true, unique: true },
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },

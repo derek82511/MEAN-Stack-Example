@@ -1,9 +1,9 @@
-let express = require('express');
-let router = express.Router();
+const express = require('express');
+const router = express.Router();
 
-let co = require('co');
+const co = require('co');
 
-let MessageService = require('../services/message');
+const MessageService = require('../services/message');
 
 router.post('/', (req, res, next) => {
     co(function*() {

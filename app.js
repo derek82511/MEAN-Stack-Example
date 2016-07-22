@@ -1,31 +1,31 @@
 require('./db');
 
-let express = require('express');
-let path = require('path');
-let favicon = require('serve-favicon');
-let logger = require('morgan');
-let cookieParser = require('cookie-parser');
-let bodyParser = require('body-parser');
+const express = require('express');
+const path = require('path');
+const favicon = require('serve-favicon');
+const logger = require('morgan');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
 
-let session = require('express-session');
+const session = require('express-session');
 
-let passport = require('passport');
+const passport = require('passport');
 
-let ConnectRoles = require('connect-roles');
+const ConnectRoles = require('connect-roles');
 
-let indexRoutes = require('./routes/index');
-let userRoutes = require('./routes/user');
-let messageRoutes = require('./routes/message');
+const indexRoutes = require('./routes/index');
+const userRoutes = require('./routes/user');
+const messageRoutes = require('./routes/message');
 
-let User = require('./models/user');
+const User = require('./models/user');
 
-let roles = new ConnectRoles({
+const roles = new ConnectRoles({
     failureHandler: (req, res, action) => {
         res.status(403).send('Access Denied - You don\'t have permission');
     }
 });
 
-let app = express();
+const app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

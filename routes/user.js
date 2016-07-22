@@ -1,9 +1,9 @@
-let express = require('express');
-let router = express.Router();
+const express = require('express');
+const router = express.Router();
 
-let passport = require('passport');
+const passport = require('passport');
 
-let User = require('../models/user');
+const User = require('../models/user');
 
 router.get('/', (req, res, next) => {
     let user = req.user;

@@ -1,3 +1,3 @@
-let mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
 mongoose.connect('mongodb://test:dj/4ej03@localhost:27017/NodeAngular');

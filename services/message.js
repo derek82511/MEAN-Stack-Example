@@ -1,7 +1,7 @@
-let co = require('co');
+const co = require('co');
 
-let Message = require('../models/message');
-let User = require('../models/user');
+const Message = require('../models/message');
+const User = require('../models/user');
 
 function create(message) {
     return function(done) {
