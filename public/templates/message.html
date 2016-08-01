@@ -1,20 +1,17 @@
-<div style="margin: 0.5em 0">
+<div class="col-md-8 col-md-offset-2" style="margin-bottom: 0.5em">
     <button type="button" class="btn btn-lg btn-default" ng-click="messageCtrl.create()">Create</button>
 </div>
-<div style="margin: 0.5em 0 1em 0">
+<div class="col-md-8 col-md-offset-2" style="margin-bottom: 0.5em">
     <textarea class="form-control" rows="3" ng-model="messageCtrl.input.content"></textarea>
 </div>
-<div class="row" ng-repeat="message in messageCtrl.messages | orderBy:'-timeStamp' ">
-    <section class="col-md-8 col-md-offset-2">
+<div class="row col-md-8 col-md-offset-2" ng-repeat="message in messageCtrl.messages | orderBy:'-timeStamp' ">
+    <section>
         <article class="panel panel-default">
             <div class="panel-body">
                 <textarea id="text_{{message._id}}" class="form-control" rows="3" ng-model="message.content" disabled></textarea>
             </div>
             <footer class="panel-footer">
-                <div class="author">
-                    {{message.author}}
-                </div>
-                <div class="config">
+                <div>
                     <button id="button_{{message._id}}" type="button" class="btn btn-default" ng-click="messageCtrl.edit(message)">Edit</button>
                     <button type="button" class="btn btn-default" ng-click="messageCtrl.delete(message)">Delete</button>
                 </div>
