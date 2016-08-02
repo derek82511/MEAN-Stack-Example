@@ -3,26 +3,26 @@
 <head>
 	<title>Logout</title>
 	
-	<link href="/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
-	<link href="/lib/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet" />
+	<link href="<%= contextPath %>/public/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="<%= contextPath %>/public/lib/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet" />
 
-	<link href="/stylesheets/style.css" rel="stylesheet" />
+	<link href="<%= contextPath %>/public/stylesheets/style.css" rel="stylesheet" />
 </head>
 <body>
 	<div id="container" class="container">
 		<legend>Logout</legend>
 
 		<br />
-		<p>Signed out, Go to Home Page after 5 seconds...</p>
+		<p>Signed out, Go to Home Page after 3 seconds...</p>
 	</div>
 	
-	<script src="/lib/jquery/dist/jquery.min.js"></script>
-	<script src="/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="<%= contextPath %>/public/lib/jquery/dist/jquery.min.js"></script>
+	<script src="<%= contextPath %>/public/lib/bootstrap/dist/js/bootstrap.min.js"></script>
 
 	<script type="text/javascript">
 		setTimeout(function(){
-			window.location.href = '/';
-		}, 5000);
+			window.location.href = '<%= contextPath %>/';
+		}, 3000);
 	</script>
 </body>
 </html>

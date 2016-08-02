@@ -3,7 +3,7 @@ angular.module('app').factory('MessageApi', ['$http', function($http) {
     var service = {};
 
     service.getMessages = function(userId, onSuccess) {
-        $http.get('/message/user/' + userId).
+        $http.get(ContextPath + '/message/user/' + userId).
         success(function(data, status, headers, config) {
             (onSuccess || angular.noop)(data);
         }).
@@ -13,7 +13,7 @@ angular.module('app').factory('MessageApi', ['$http', function($http) {
     };
 
     service.addMessage = function(message, onSuccess) {
-        $http.post('/message', message).
+        $http.post(ContextPath + '/message', message).
         success(function(data, status, headers, config) {
             (onSuccess || angular.noop)(data);
         }).
@@ -23,7 +23,7 @@ angular.module('app').factory('MessageApi', ['$http', function($http) {
     };
 
     service.updateMessage = function(message, onSuccess) {
-        $http.put('/message/' + message._id, message).
+        $http.put(ContextPath + '/message/' + message._id, message).
         success(function(data, status, headers, config) {
             (onSuccess || angular.noop)(data);
         }).
@@ -33,7 +33,7 @@ angular.module('app').factory('MessageApi', ['$http', function($http) {
     };
 
     service.deleteMessage = function(message, onSuccess) {
-        $http.delete('/message/' + message._id).
+        $http.delete(ContextPath + '/message/' + message._id).
         success(function(data, status, headers, config) {
             (onSuccess || angular.noop)(data);
         }).

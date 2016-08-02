@@ -3,7 +3,7 @@ angular.module('app').factory('UserApi', ['$http', function($http) {
     var service = {};
 
     service.getUser = function(onSuccess) {
-        $http.get('/user').
+        $http.get(ContextPath + '/user').
         success(function(data, status, headers, config) {
             (onSuccess || angular.noop)(data);
         }).
@@ -13,7 +13,7 @@ angular.module('app').factory('UserApi', ['$http', function($http) {
     };
 
     service.register = function(user, onSuccess) {
-        $http.post('/user/register', user).
+        $http.post(ContextPath + '/user/register', user).
         success(function(data, status, headers, config) {
             (onSuccess || angular.noop)(data);
         }).
@@ -23,7 +23,7 @@ angular.module('app').factory('UserApi', ['$http', function($http) {
     };
 
     service.login = function(loginForm, onSuccess) {
-        $http.post('/user/login', loginForm).
+        $http.post(ContextPath + '/user/login', loginForm).
         success(function(data, status, headers, config) {
             (onSuccess || angular.noop)(data);
         }).

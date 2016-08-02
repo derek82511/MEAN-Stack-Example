@@ -2,23 +2,23 @@ angular.module('app').config(['$stateProvider', function($stateProvider) {
     $stateProvider
         .state('home', {
             url: '/',
-            templateUrl: '/templates/home.html'
+            templateUrl: ContextPath + '/public/templates/home.html'
         })
         .state('register', {
             url: '/register',
-            templateUrl: '/templates/register.html',
+            templateUrl: ContextPath + '/public/templates/register.html',
             controller: 'RegisterController',
             controllerAs: 'registerCtrl'
         })
         .state('login', {
             url: '/login',
-            templateUrl: '/templates/login.html',
+            templateUrl: ContextPath + '/public/templates/login.html',
             controller: 'LoginController',
             controllerAs: 'loginCtrl'
         })
         .state('message', {
             url: '/message',
-            templateUrl: '/templates/message.html',
+            templateUrl: ContextPath + '/public/templates/message.html',
             controller: 'MessageController',
             controllerAs: 'messageCtrl'
         })
