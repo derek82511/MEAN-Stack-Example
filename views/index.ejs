@@ -34,7 +34,7 @@
 						<a href="#/login">Login</a>
 					</li>
 					<li ng-if="navCtrl.isPermit('user')">
-						<a href="<%= contextPath %>/logout">Logout</a>
+						<a ng-click="navCtrl.logout()" href="#">Logout</a>
 					</li>
 				</ul>
 			</div>
@@ -54,7 +54,7 @@
 	</footer>
 
 	<script type="text/javascript">
-		var ContextPath = '<%= contextPath %>';
+		window.ContextPath = '<%= contextPath %>';
 	</script>
 
 	<%- include include.ejs %>

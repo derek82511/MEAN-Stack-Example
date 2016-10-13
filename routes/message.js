@@ -1,21 +1,24 @@
 const express = require('express');
 const router = express.Router();
-
+const ObjectID = require('mongodb').ObjectID;
 const co = require('co');
+const moment = require('moment');
 
-const MessageService = require('../services/message');
+const db = require('../helpers/db');
 
 router.post('/', (req, res, next) => {
+    let message = {
+        userId: req.body.userId,
+        content: req.body.content,
+        timeStamp: moment(new Date()).format('YYYY/MM/DD HH:mm:ss')
+    };
+
     co(function*() {
-        let message = {
-            content: req.body['content'],
-            user: req.body['userId']
-        };
-
         try {
-            let messageDoc = yield MessageService.create(message);
+            yield db.messages.insertOne(message);
+            console.log(message);
 
-            res.status(201).json(messageDoc);
+            res.status(201).json(message);
         } catch (err) {
             res.json({
                 error: err.message
@@ -25,11 +28,21 @@ router.post('/', (req, res, next) => {
 });
 
 router.put('/:id', (req, res, next) => {
+    let messageId = req.params.id;
+    let message = req.body;
+
     co(function*() {
         try {
-            let messageDoc = yield MessageService.update(req.params['id'], req.body);
+            let updateMessage = {
+                _id: new ObjectID(message._id),
+                userId: message.userId,
+                content: message.content,
+                timeStamp: message.timeStamp
+            };
 
-            res.json(messageDoc);
+            yield db.messages.findOneAndReplace({ _id: new ObjectID(messageId) }, updateMessage);
+
+            res.json(updateMessage);
         } catch (err) {
             res.json({
                 error: err.message
@@ -39,9 +52,11 @@ router.put('/:id', (req, res, next) => {
 });
 
 router.delete('/:id', (req, res, next) => {
+    let messageId = req.params.id;
+
     co(function*() {
         try {
-            yield MessageService.remove(req.params['id']);
+            yield db.messages.findOneAndDelete({ _id: new ObjectID(messageId) });
 
             res.status(204).send();
         } catch (err) {
@@ -53,9 +68,11 @@ router.delete('/:id', (req, res, next) => {
 });
 
 router.get('/user/:id', (req, res, next) => {
+    let userId = req.params.id;
+
     co(function*() {
         try {
-            let messages = yield MessageService.findByUserId(req.params['id']);
+            let messages = yield db.messages.find({ userId: userId }).toArray();
 
             res.json(messages);
         } catch (err) {

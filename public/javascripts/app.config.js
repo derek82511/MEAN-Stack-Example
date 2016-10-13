@@ -1,4 +1,4 @@
-angular.module('app').config(['$stateProvider', function($stateProvider) {
+angular.module('app').config(['$stateProvider', '$httpProvider', function($stateProvider, $httpProvider) {
     $stateProvider
         .state('home', {
             url: '/',
@@ -22,4 +22,7 @@ angular.module('app').config(['$stateProvider', function($stateProvider) {
             controller: 'MessageController',
             controllerAs: 'messageCtrl'
         })
+
+    $httpProvider.interceptors.push('AuthInterceptor');
+
 }]);

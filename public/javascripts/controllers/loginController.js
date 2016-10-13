@@ -1,4 +1,4 @@
-angular.module('app').controller('LoginController', ['$state', 'UserApi', 'UserManager', function($state, UserApi, UserManager) {
+angular.module('app').controller('LoginController', ['$state', '$window', 'UserApi', 'UserManager', function($state, $window, UserApi, UserManager) {
 
     var self = this;
 
@@ -18,6 +18,8 @@ angular.module('app').controller('LoginController', ['$state', 'UserApi', 'UserM
                 return;
             }
 
+            $window.sessionStorage.token = data.token;
+            
             UserManager.loadUserData();
 
             $state.go("home");

@@ -1,4 +1,4 @@
-angular.module('app').controller('NavController', ['UserManager', function(UserManager) {
+angular.module('app').controller('NavController', ['$window', 'UserManager', function($window, UserManager) {
 
     var self = this;
 
@@ -16,5 +16,9 @@ angular.module('app').controller('NavController', ['UserManager', function(UserM
         return false;
     };
 
+    this.logout = function(){
+        delete $window.sessionStorage.token;
+        UserManager.loadUserData();
+    };
 
 }]);

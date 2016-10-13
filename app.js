@@ -1,6 +1,6 @@
 require('./helpers/db');
 
-const config = require('./config');
+const CONSTANT = require('./config/constant');
 
 const express = require('express');
 const path = require('path');
@@ -8,16 +8,13 @@ const favicon = require('serve-favicon');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-const session = require('express-session');
-
-const passport = require('passport');
-const ConnectRoles = require('connect-roles');
 
 const indexRoutes = require('./routes/index');
 const userRoutes = require('./routes/user');
 const messageRoutes = require('./routes/message');
 
 const security = require('./helpers/security');
+const jwtAuth = security.getJwtAuth();
 const roles = security.getConnectRoles();
 
 const app = express();
@@ -32,10 +29,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.use(session({ secret: 'NodeAngular' }));
-app.use(passport.initialize());
-app.use(passport.session());
-security.loadPassportStrategy();
+app.use(jwtAuth);
 app.use(roles.middleware());
 
 const router = express.Router();
@@ -49,13 +43,13 @@ router.use('/message', roles.is('user'), messageRoutes);
 
 //page
 router.use((req, res, next) => {
-    res.locals.contextPath = config.ContextPath;
+    res.locals.contextPath = CONSTANT.ContextPath;
     next();
 });
 router.use('/', indexRoutes);
 
 //serve for contextPath
-app.use(config.ContextPath, router);
+app.use(CONSTANT.ContextPath, router);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

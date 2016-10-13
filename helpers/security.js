@@ -1,12 +1,14 @@
-const passport = require('passport');
+const expressJwt = require('express-jwt');
 const ConnectRoles = require('connect-roles');
 
-const User = require('../models/user');
+const CONSTANT = require('../config/constant');
+const db = require('./db');
 
-function loadPassportStrategy() {
-    passport.use(User.createStrategy());
-    passport.serializeUser(User.serializeUser());
-    passport.deserializeUser(User.deserializeUser());
+function getJwtAuth() {
+    return expressJwt({
+        secret: CONSTANT.TokenSecret,
+        credentialsRequired: false
+    });
 }
 
 function getConnectRoles() {
@@ -26,6 +28,6 @@ function getConnectRoles() {
 }
 
 module.exports = {
-    loadPassportStrategy: loadPassportStrategy,
+    getJwtAuth: getJwtAuth,
     getConnectRoles: getConnectRoles
 };

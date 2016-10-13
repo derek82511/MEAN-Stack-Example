@@ -1,3 +1,14 @@
-const mongoose = require('mongoose');
+const Wrapper = require('mongodb-native-wrapper').Wrapper;
 
-mongoose.connect('mongodb://test:dj/4ej03@localhost:27017/NodeAngular');
+const CONSTANT = require('../config/constant');
+
+const db = new Wrapper({
+    url: CONSTANT.MongoDBUrl,
+    collections: ['users', 'messages']
+});
+
+db.onConnected(function() {
+    console.log('MongoDB Connected');
+});
+
+module.exports = db;

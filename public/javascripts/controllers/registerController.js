@@ -1,4 +1,4 @@
-angular.module('app').controller('RegisterController', ['$state', 'UserApi', 'UserManager', function($state, UserApi, UserManager) {
+angular.module('app').controller('RegisterController', ['$state', '$window', 'UserApi', 'UserManager', function($state, $window, UserApi, UserManager) {
 
     var self = this;
 
@@ -21,6 +21,8 @@ angular.module('app').controller('RegisterController', ['$state', 'UserApi', 'Us
                 self.error = data.error;
                 return;
             }
+
+            $window.sessionStorage.token = data.token;
 
             UserManager.loadUserData();
 
