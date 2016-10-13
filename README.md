@@ -1,5 +1,5 @@
 # MEAN-Stack-Example
-A simple blog application implement with Mean Stack
+A simple blog application implement with MEAN Stack
 
 *   Authentication & Authorization implementation
     * jsonwebtoken
