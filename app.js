@@ -82,5 +82,10 @@ app.use((err, req, res, next) => {
     });
 });
 
+const PORT = process.env.PORT || 8080;
 
-module.exports = app;
+const http = require('http').Server(app);
+
+http.listen(PORT, () => {
+    console.log(`App listening on port ${PORT}`);
+});
